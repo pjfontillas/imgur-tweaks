@@ -1,0 +1,4 @@
+/* Used to hide title/caption on initial page load, since JS waits for DOM to be ready */
+#image-title {
+    display: none;
+}
