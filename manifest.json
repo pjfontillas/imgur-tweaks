@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+    "name": "Imgur Tweaks",
+    "description": "This extension adds some features and tweaks to Imgur such as hiding captions/titles until you click on it and automatically showing more images.",
+    "version": "1.1",
+    "permissions": [
+        "activeTab"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["http://imgur.com/*"],
+            "js": ["jquery.min.js", "imgur-tweaks.js"],
+            "css": ["imgur-tweaks.css"]
+        }
+    ],
+    "web_accessible_resources": ["jquery-1.10.2.min.map"]
+}
