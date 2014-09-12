@@ -26,7 +26,7 @@
             $('#showCaption span.seconds').html(time);
             if (time <= 0) {
                 $('#showCaption a').click();
-                $('#showCaption span.seconds').html('10');
+                $('#showCaption span.seconds').html('5');
             } else {
                 captionTimer = setTimeout(function () {
                     updateTimer(--time);
@@ -47,9 +47,9 @@
                 // allow user to unhide caption, and start timer to automatically show
                 $('#showCaption').show();
                 clearTimeout(captionTimer);
-                $('#showCaption span.seconds').html('10');
+                $('#showCaption span.seconds').html('5');
                 captionTimer = setTimeout(function () {
-                    updateTimer(9);
+                    updateTimer(4);
                 }, 1000);
                 
                 $(document).on('keydown', checkKeyShowCaption);
@@ -76,7 +76,7 @@
         }
         
         // insert show caption link and hide caption
-        $('#image-title').data('caption', $('#image-title').html()).empty().hide().after('<h2 id="showCaption"><a href="#">Show Caption</a> <span class="timer"><small>Automatically showing in <span class="seconds">10</span> seconds...</small></span></h2>');
+        $('#image-title').data('caption', $('#image-title').html()).empty().hide().after('<h2 id="showCaption"><a href="#">Show Caption</a> <span class="timer"><small>Automatically showing in <span class="seconds">5</span> seconds...</small></span></h2>');
         // support for album title and description
         $('#image h2.album-title, #image div.description').each(function (index, element) {
             element = $(element);
@@ -90,7 +90,7 @@
         $('#image-title').on('DOMSubtreeModified', handlePageChange);
         
         captionTimer = setTimeout(function () {
-            updateTimer(9);
+            updateTimer(4);
         }, 1000);
         
         $(document).on('keydown', checkKeyShowCaption);
