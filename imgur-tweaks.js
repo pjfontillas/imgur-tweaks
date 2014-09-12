@@ -22,11 +22,11 @@
         }
         
         function updateTimer(time) {
-            console.log('in updateTimer... time:', time);
+            //console.log('in updateTimer... time:', time);
             $('#showCaption span.seconds').html(time);
             if (time <= 0) {
                 $('#showCaption a').click();
-                $('#showCaption span.seconds').html('10');
+                $('#showCaption span.seconds').html('5');
             } else {
                 captionTimer = setTimeout(function () {
                     updateTimer(--time);
@@ -47,9 +47,9 @@
                 // allow user to unhide caption, and start timer to automatically show
                 $('#showCaption').show();
                 clearTimeout(captionTimer);
-                $('#showCaption span.seconds').html('10');
+                $('#showCaption span.seconds').html('5');
                 captionTimer = setTimeout(function () {
-                    updateTimer(9);
+                    updateTimer(4);
                 }, 1000);
                 
                 $(document).on('keydown', checkKeyShowCaption);
@@ -76,7 +76,7 @@
         }
         
         // insert show caption link and hide caption
-        $('#image-title').data('caption', $('#image-title').html()).empty().hide().after('<h2 id="showCaption"><a href="#">Show Caption</a> <span class="timer"><small>Automatically showing in <span class="seconds">10</span> seconds...</small></span></h2>');
+        $('#image-title').data('caption', $('#image-title').html()).empty().hide().after('<h2 id="showCaption"><a href="#">Show Caption</a> <span class="timer"><small>Automatically showing in <span class="seconds">5</span> seconds...</small></span></h2>');
         // support for album title and description
         $('#image h2.album-title, #image div.description').each(function (index, element) {
             element = $(element);
@@ -90,7 +90,7 @@
         $('#image-title').on('DOMSubtreeModified', handlePageChange);
         
         captionTimer = setTimeout(function () {
-            updateTimer(9);
+            updateTimer(4);
         }, 1000);
         
         $(document).on('keydown', checkKeyShowCaption);
@@ -172,5 +172,81 @@
                 }
             });
         });
+
+        // Are You Sure support
+        (function () {
+            var message = [
+                '<div id="are-you-sure" style="',
+                    'display: none;',
+                    'position: relative;',
+                    'top: -36px;',
+                    'width: 82%;',
+                    'margin: 0 0 0 5px;',
+                    'line-height: normal;',
+                    'color: red;',
+                '">* Are you sure you want to make this comment? It\'s overused and may make you look like an unoriginal twat.</div>'
+            ].join('');
+            $('#submit-caption').append(message);
+        
+            $('#caption_textarea').on('keyup', function (event) {
+                function checkForStupids(input) {
+                    // short list of phrases, will expand when not lazy
+                    var regexes = [
+                        'what a time to be alive',
+                        //'\\+1',
+                        'the feels',
+                        'you did the thing',
+                        'i always upvote',
+                        'to the top',
+                        'to the front',
+                        'nazi that coming',
+                        'unzip',
+                        'not since the accident',
+                        'never forget',
+                        'op is a fag',
+                        'what she said',
+                        'for science',
+                        'put your dick in it',
+                        'punchline in title',
+                        'i need an adult',
+                        //'9gag',
+                        'majestic as fuck',
+                        'calm down satan',
+                        'hold my beer',
+                        'i lost it at',
+                        'nailed it',
+                        'banana for scale',
+                        'bold move cotton',
+                        'things that never happened'
+                    ].join('|');
+
+                    var regExp = new RegExp(regexes, 'gi');
+                    if (input.match(regExp) !== null) {
+                        // user is stupids, very, very stupids
+                        return true;
+                    }
+
+                    // does not match any of our regexes, user is not stupids
+                    return false;
+                }
+                
+                function showMessage() {
+                    $('#are-you-sure').css('display', 'inline-block');
+                }
+                
+                function hideMessage() {
+                    $('#are-you-sure').css('display', 'none');
+                }
+                
+                var input = $('#caption_textarea').val();
+                if (checkForStupids(input)) {
+                    showMessage();
+                } else {
+                    hideMessage();
+                }
+            });
+            console.log('Loaded imgur: Are You Sure?');
+        }());
+
     });
 }());
